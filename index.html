@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AssistedLiving - Trading</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: left;
+      margin: 20px;
+      padding: 20px;
+      background-image: url("");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+    }
+    .logo {
+      width: 100px;
+      height: 100px;
+      margin-right: 10px;
+    }
+    .region-logo {
+      width: 150px;
+      height: 150px;
+    }
+    .region-cell {
+      font-size: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .interval {
+      position: absolute;
+      top: 16px;
+      left: 120px;
+      font-size: 20px;
+    }
+    .current-time {
+      position: absolute;
+      top: 20px;
+      right: 40px;
+      font-size: 16px;
+    }
+    h1 {
+      text-align: center;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+      background-color: #f2f2f2;
+      font-size: 14px;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 4px 8px;
+      text-align: left;
+      line-height: 1.2;
+    }
+    .button {
+      padding: 2px 12px;
+      cursor: pointer;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      width: 100%;
+    }
+    .rise {
+      color: white;
+      font-weight: bold;
+      background-color: #4CAF50;
+    }
+    .slightly-rise {
+      color: white;
+      font-weight: bold;
+      background-color: #2d7e33;
+    }
+    .skyrocket {
+      color: black;
+      font-weight: bold;
+      background-color: #4aec57;
+    }
+    .fake {
+      color: black;
+      font-weight: bold;
+      background-color: #b07a78;
+    }
+    :root {
+    --slightly-rise: #2d7e33;
+    --rise: #4CAF50;
+    --skyrocket: #4aec57;
+    --fake: #b07a78;
+    }
+    .reset-button {
+      cursor: pointer;
+      border: None;
+      color: black;
+      border-radius: 4px;
+      padding: 2px;
+      width: 100%;
+      background-color: #b0b0b0;
+      font-weight: bold;
+    }
+    .reset-all-button {
+      padding: 6px 12px;
+      cursor: pointer;
+      border: solid;
+      color: black;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      background-color: #b0b0b0;
+      font-weight: bold;
+    }
+    .copy-button {
+      padding: 6px 12px;
+      cursor: pointer;
+      border: solid;
+      color: black;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      background-color: #b0b0b0;
+      font-weight: bold;
+    }
+    th.region-column {
+      font-size: 20px;
+      text-align: center;
+      width: 300px;
+      background-color: #b0b0b0;
+    }
+    th.category-column {
+      font-size: 20px;
+      text-align: center;
+      background-color: #b0b0b0;
+    }
+    td.button-class {
+      width: 110px;
+      border-right: none;
+      border-left: none;
+    }
+    tr.region-row {
+      border-top-style: solid;
+      border-top-width: 5px;
+    }
+    li {
+      font-size: 16px;
+    }
+    .category {
+      font-size: 18px;
+      padding: 2px 4px;
+      font-weight: bold;
+      text-align: right;
+    }
+    .load-data-input {
+      resize: none;
+      width: 200px;
+      height: 20px;
+      padding: 4px 10px;
+      margin-bottom: -9px;
+    }
+    .powered-by {
+      position: absolute;
+      top: 10px;
+      left: 40px;
+      font-size: 12px;
+      font-style: italic;
+    }
+    .countdown {
+      font-weight: bold;
+    }
+    .discord-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      position: absolute;
+      right: 40px;
+      width: 100px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .footer {
+      position: absolute;
+      background-color: #8c95a0;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      width: 100%;
+      font-style: bold;
+      left: 0;
+    }
+    .top-bar {
+      position: absolute;
+      background-color: #8c95a0;
+      top: 0;
+      left: 0;
+      padding: 18px 0;
+      width: 100%
+    }
+    .icon-container {
+      position: relative; /* Create a positioning context for the icon */
+      display: inline-block; /* Ensure the icon stays inline with text */
+    }
+    .rumor-icon {
+      display: block; /* Initially hide the image */
+      top: -30px;
+      width: 20px;
+      height: 20px;
+    }
+    .rumor-hover-href {
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+    }
+    .rumor-hover-img {
+      display: none; /* Initially hide the image */
+      position: absolute; /* Position the image relative to its container */
+      top: -200px; /* Adjust the positioning as needed */
+      left: -520px; /* Position the image to the right of the text */
+      width: 500px; /* Set the width of the icon */
+    }
+    .icon-container:hover .rumor-hover-img {
+      display: inline; /* Show the image on hover */
+    }
+    </style>
+  </head>
+  <body>
+
+    <div class="top-bar">&nbsp;</div>
+    <div class="powered-by" id="poweredBy">By: Xarilrt</div>
+    <div class="current-time" id="currentTime"></div>
+    <div class="interval" id="interval">Trade Reset: <span class="countdown" id="countdown"></span></div>
+
+    <div class="header">
+      <img class="logo" src="img/motorhandicap.png" alt="Logo">
+      <h1>AssistedLiving - Trading</h1>
+    </div>
+
+    <div>
+      <span><button class="reset-all-button" id="resetButton" onclick="confirmResetAllColors()">Reset All</button></span>
+      &nbsp;&nbsp;&nbsp;
+      <span><button class="copy-button" id="copyButton">Copy Data</button></span>
+      &nbsp;&nbsp;&nbsp;
+      <span><textarea class="load-data-input" id="localStorageData" placeholder="Load Data"></textarea></span>
+      &nbsp;&nbsp;&nbsp;
+      <span><button class="reset-all-button" id="loadAddButton">Add Data</button></span>
+      &nbsp;&nbsp;&nbsp;
+      <span><button class="reset-all-button" id="fullReloadButton">Full Reload Data</button></span>
+      &nbsp;&nbsp;&nbsp;
+      <span><a class="discord-button" href="https://discord.com/channels/1128432330831319072/1145811477614305380" target="_blank">Discord</a></span>
+    </div>
+    <table>
+      <tr>
+        <th class="region-column">Region</th>
+        <th class="category-column" colspan="6">Category</th>
+      </tr>
+      <tr class="region-row" data-region="Balenos">
+        <td class="region-cell" rowspan="8">
+          <div>Balenos</div>
+          <div><img class="region-logo" src="img/balenos.png" alt="Balenos"></div>
+        </td>
+        <td class="category" data-region="Balenos">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr data-region="Balenos">
+        <td class="category" data-region="Balenos">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr data-region="Balenos">
+        <td class="category" data-region="Balenos">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr data-region="Balenos">
+        <td class="category" data-region="Balenos">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr data-region="Balenos">
+        <td class="category" data-region="Balenos">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr data-region="Balenos">
+        <td class="category" data-region="Balenos">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr data-region="Balenos">
+        <td class="category" data-region="Balenos">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr data-region="Balenos">
+        <td class="category" data-region="Balenos">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Balenos" onclick="changeColor(this, 'Balenos')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Balenos')">Reset</button></td>
+      </tr>
+      <tr class="region-row" data-region="Serendia">
+        <td class="region-cell" rowspan="8">
+          <div>Serendia</div>
+          <div><img class="region-logo" src="img/serendia.png" alt="Serendia"></div>
+        </td>
+        <td class="category" data-region="Serendia">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Serendia">
+        <td class="category" data-region="Serendia">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Serendia">
+        <td class="category" data-region="Serendia">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Serendia">
+        <td class="category" data-region="Serendia">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Serendia">
+        <td class="category" data-region="Serendia">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Serendia">
+        <td class="category" data-region="Serendia">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Serendia">
+        <td class="category" data-region="Serendia">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Serendia">
+        <td class="category" data-region="Serendia">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Serendia" onclick="changeColor(this, 'Serendia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr class="region-row" data-region="Calpheon">
+        <td class="region-cell" rowspan="8">
+          <div>Calpheon</div>
+          <div><img class="region-logo" src="img/calpheon.png" alt="Calpheon"></div>
+        </td>
+        <td class="category" data-region="Calpheon">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Calpheon">
+        <td class="category" data-region="Calpheon">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Calpheon">
+        <td class="category" data-region="Calpheon">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Calpheon">
+        <td class="category" data-region="Calpheon">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Calpheon">
+        <td class="category" data-region="Calpheon">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Calpheon">
+        <td class="category" data-region="Calpheon">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Calpheon">
+        <td class="category" data-region="Calpheon">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr data-region="Calpheon">
+        <td class="category" data-region="Calpheon">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Calpheon" onclick="changeColor(this, 'Calpheon')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Serendia')">Reset</button></td>
+      </tr>
+      <tr class="region-row" data-region="Mediah">
+        <td class="region-cell" rowspan="8">
+          <div>Mediah</div>
+          <div><img class="region-logo" src="img/mediah.png" alt="Mediah"></div>
+        </td>
+        <td class="category" data-region="Mediah">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr data-region="Mediah">
+        <td class="category" data-region="Mediah">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr data-region="Mediah">
+        <td class="category" data-region="Mediah">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr data-region="Mediah">
+        <td class="category" data-region="Mediah">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr data-region="Mediah">
+        <td class="category" data-region="Mediah">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr data-region="Mediah">
+        <td class="category" data-region="Mediah">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr data-region="Mediah">
+        <td class="category" data-region="Mediah">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr data-region="Mediah">
+        <td class="category" data-region="Mediah">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mediah" onclick="changeColor(this, 'Mediah')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mediah')">Reset</button></td>
+      </tr>
+      <tr class="region-row" data-region="Valencia">
+        <td class="region-cell" rowspan="8">
+          <div>Valencia</div>
+          <div><img class="region-logo" src="img/valencia.png" alt="Valencia"></div>
+        </td>
+        <td class="category" data-region="Valencia">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr data-region="Valencia">
+        <td class="category" data-region="Valencia">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr data-region="Valencia">
+        <td class="category" data-region="Valencia">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr data-region="Valencia">
+        <td class="category" data-region="Valencia">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr data-region="Valencia">
+        <td class="category" data-region="Valencia">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr data-region="Valencia">
+        <td class="category" data-region="Valencia">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr data-region="Valencia">
+        <td class="category" data-region="Valencia">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr data-region="Valencia">
+        <td class="category" data-region="Valencia">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Valencia" onclick="changeColor(this, 'Valencia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Valencia')">Reset</button></td>
+      </tr>
+      <tr class="region-row" data-region="Kamasylvia">
+        <td class="region-cell" rowspan="8">
+          <div>Kamasylvia</div>
+          <div><img class="region-logo" src="img/kamasylvia.png" alt="Kamasylvia"></div>
+        </td>
+        <td class="category" data-region="Kamasylvia">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr data-region="Kamasylvia">
+        <td class="category" data-region="Kamasylvia">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr data-region="Kamasylvia">
+        <td class="category" data-region="Kamasylvia">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr data-region="Kamasylvia">
+        <td class="category" data-region="Kamasylvia">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr data-region="Kamasylvia">
+        <td class="category" data-region="Kamasylvia">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr data-region="Kamasylvia">
+        <td class="category" data-region="Kamasylvia">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr data-region="Kamasylvia">
+        <td class="category" data-region="Kamasylvia">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr data-region="Kamasylvia">
+        <td class="category" data-region="Kamasylvia">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Kamasylvia" onclick="changeColor(this, 'Kamasylvia')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Kamasylvia')">Reset</button></td>
+      </tr>
+      <tr class="region-row" data-region="Drieghan">
+        <td class="region-cell" rowspan="8">
+          <div>Drieghan</div>
+          <div><img class="region-logo" src="img/drieghan.png" alt="Drieghan"></div>
+        </td>
+        <td class="category" data-region="Drieghan">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr data-region="Drieghan">
+        <td class="category" data-region="Drieghan">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr data-region="Drieghan">
+        <td class="category" data-region="Drieghan">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr data-region="Drieghan">
+        <td class="category" data-region="Drieghan">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr data-region="Drieghan">
+        <td class="category" data-region="Drieghan">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr data-region="Drieghan">
+        <td class="category" data-region="Drieghan">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr data-region="Drieghan">
+        <td class="category" data-region="Drieghan">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr data-region="Drieghan">
+        <td class="category" data-region="Drieghan">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Drieghan" onclick="changeColor(this, 'Drieghan')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Drieghan')">Reset</button></td>
+      </tr>
+      <tr class="region-row" data-region="Mountain of Eternal Winter">
+        <td class="region-cell" rowspan="8">
+          <div>Mountain of Eternal Winter</div>
+          <div><img class="region-logo" src="img/mountainofeternalwinter.png" alt="Mountain of Eternal Winter"></div>
+        </td>
+        <td class="category" data-region="Mountain of Eternal Winter">General Goods</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+      <tr data-region="Mountain of Eternal Winter">
+        <td class="category" data-region="Mountain of Eternal Winter">Raw Materials</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+      <tr data-region="Mountain of Eternal Winter">
+        <td class="category" data-region="Mountain of Eternal Winter">Clothes</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+      <tr data-region="Mountain of Eternal Winter">
+        <td class="category" data-region="Mountain of Eternal Winter">Medicine</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+      <tr data-region="Mountain of Eternal Winter">
+        <td class="category" data-region="Mountain of Eternal Winter">Food</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+      <tr data-region="Mountain of Eternal Winter">
+        <td class="category" data-region="Mountain of Eternal Winter">Military Supplies</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+      <tr data-region="Mountain of Eternal Winter">
+        <td class="category" data-region="Mountain of Eternal Winter">Luxuries</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+      <tr data-region="Mountain of Eternal Winter">
+        <td class="category" data-region="Mountain of Eternal Winter">Relic</td>
+        <td class="button-class"><button class="button slightly-rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Slightly Rise</button></td>
+        <td class="button-class"><button class="button rise" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Rise</button></td>
+        <td class="button-class"><button class="button skyrocket" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Skyrocket</button></td>
+        <td class="button-class"><button class="button fake" data-region="Mountain of Eternal Winter" onclick="changeColor(this, 'Mountain of Eternal Winter')">Fake</button></td>
+        <td class="button-class"><button class="reset-button" onclick="resetColor(this, 'Mountain of Eternal Winter')">Reset</button></td>
+      </tr>
+    </table>
+
+    <br/>
+    <br/>
+    
+    <h2>Rumor Locations</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th style="background-color: #680606 !important; text-align: center; color: white">Price Decrease Rumor Locations</th>
+          <th style="background-color: #004000 !important; text-align: center; color: white">Price Increase Rumor Locations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Balenos</td>
+          <td>
+            <ul>
+              <li>General Goods – Elmos Berry (Luxury Vendor)</li>
+              <li>Raw Materials – Bahar (Trade Manager)</li>
+              <li>Clothes – Sheil (Central Market)</li>
+              <li>Medicine – Zaaira (Material Vendor)</li>
+              <li>Food – Lacy (Olvia)</li>
+              <li>Military Supplies – Tranan Underfoe (Blacksmith)</li>
+              <li>Luxuries – Marsella (Jeweler)</li>
+              <li>Relic – Lolly (Olvia Trade Manager)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – Clorine (General Goods)</li>
+              <li>Raw Materials – Bahar (Trade Manager)</li>
+              <li>
+                <span class="icon-container">
+                  <a href="img/rumors/balenos_clothes.png" class="rumor-hover-href" target="_blank">
+                    Clothes – Shiel (Central Market)
+                    <img src="img/rumors/balenos_clothes.png" alt="Balenos Clothes" class="rumor-hover-img">
+                  </a>
+                </span>
+              </li>
+              <li>Medicine – Zaaira (Material Vendor)</li>
+              <li>Food – Nadia Rowen (Olvia)</li>
+              <li>Military Supplies – Tranan Underfoe (Blacksmith)</li>
+              <li>Luxuries – Marsella (Jeweler)</li>
+              <li>
+                <span class="icon-container">
+                  <a href="img/rumors/balenos_relic.png" class="rumor-hover-href" target="_blank">
+                    Relic – Lolly (Olvia Trade Manager)
+                    <img src="img/rumors/balenos_relic.png" alt="Balenos Relic" class="rumor-hover-img">
+                  </a>
+                </span>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Serenda</td>
+          <td>
+            <ul>
+              <li>General Goods – Cleia (Heidel Fountain)</li>
+              <li>Raw Materials – Suita (Trade Manager)</li>
+              <li>Clothes – Cleia (Central Market)</li>
+              <li>Medicine – Lara (General Goods)</li>
+              <li>Food – Costa Farm Node</li>
+              <li>Military Supplies – Techthon (Blacksmith)</li>
+              <li>Luxuries – Dora Fonti (Jeweler)</li>
+              <li>Relic – Ficy (Workshop Manager)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – Cleia (Heidel Fountain)</li>
+              <li>Raw Materials – Suita (Trade Manager)</li>
+              <li>Clothes – Cleia (Central Market)</li>
+              <li>Medicine – Lara (General Goods)</li>
+              <li>Food – Costa Farm Node</li>
+              <li>Military Supplies – Techthon (Blacksmith)</li>
+              <li>Luxuries – Dora Fonti (Jeweler)</li>
+              <li>Relic – Ficy (Workshop Manager)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Calpheon</td>
+          <td>
+            <ul>
+              <li>General Goods – Alchem (General Goods)</li>
+              <li>Raw Materials – Harden (Trade Manager)</li>
+              <li>Clothes – Breesman ( North Stable Keeper)</li>
+              <li>Medicine – Alfredo Lombardi (near bridge)</li>
+              <li>Food – Fredelles Herba (Tavern Keeper)</li>
+              <li>Military Supplies – Calpheon Bridge</li>
+              <li>Luxuries – Lilvayne (Work Supervisor)</li>
+              <li>Relic – Ashrogue (South Stable Keeper)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – Dobart (near the stairs)</li>
+              <li>Raw Materials – Elle Belucci (Central Market)</li>
+              <li>Clothes – Elle Belucci (Central Market)</li>
+              <li>Medicine – Ahr (Seed Vendor)</li>
+              <li>Food – Ahr (Seed Vendor)</li>
+              <li>Military Supplies – Lilvayne (Work Supervisor)</li>
+              <li>Luxuries – Giovanni Romano (Carpet Vendor)</li>
+              <li>Relic – Patrigio (Night Vendor)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Mediah</td>
+          <td>
+            <ul>
+              <li>General Goods – Nelople (General Goods)</li>
+              <li>Raw Materials – Quina (Trade Manager)</li>
+              <li>Clothes – Lucy Benkum (Central Market)</li>
+              <li>Medicine – Lashir (Material Vendor)</li>
+              <li>Food – Mariam (Innkeeper)</li>
+              <li>Military Supplies – Mevo Mauranan (Blacksmith)</li>
+              <li>Luxuries – Belgar (Jeweler)</li>
+              <li>Relic – Patrigio (Night Vendor)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – Nelople (General Goods)</li>
+              <li>
+                <span class="icon-container">
+                  <a href="img/rumors/mediah_rawmats.png" class="rumor-hover-href" target="_blank">
+                    Raw Materials – Quina (Trade Manager)
+                    <img src="img/rumors/mediah_rawmats.png" alt="Mediah Raw Mats" class="rumor-hover-img">
+                  </a>
+                </span>
+              </li>
+              <li>Clothes – Lucy Benkum (Central Market)</li>
+              <li>Medicine – Lashir (Material Vendor)</li>
+              <li>Food – Mariam (Innkeeper)</li>
+              <li>Military Supplies – Mevo Mauranan (Blacksmith)</li>
+              <li>Luxuries – Belgar (Jeweler)</li>
+              <li>
+                <span class="icon-container">
+                  <a href="img/rumors/mediah_relic.png" class="rumor-hover-href" target="_blank">
+                    Relic – Patrigio (Night Vendor)
+                    <img src="img/rumors/mediah_relic.png" alt="Mediah Relic" class="rumor-hover-img">
+                  </a>
+                </span>
+              </li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Valencia</td>
+          <td>
+            <ul>
+              <li>General Goods – James Drucker</li>
+              <li>Raw Materials – Yis Kunjamin (North Trade Manager)</li>
+              <li>Clothes – Burita Allon (West Trade Manager)</li>
+              <li>Medicine – Pujarin (Material Vendor – outside)</li>
+              <li>Food – Nerasabi Alom (Innkeeper)</li>
+              <li>Military Supplies – Elfa (Blacksmith)</li>
+              <li>Luxuries – Ramanit (Storage Keeper)</li>
+              <li>Relic – Patrigio (Night Vendor)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – Jursin (General Goods)</li>
+              <li>Raw Materials – Yis Kunjamin (North Trade Manager)</li>
+              <li>Clothes – Burita Allon (West Trade Manager)</li>
+              <li>Medicine – Pujarin (Material Vendor – outside)</li>
+              <li>Food – Nerasabi Alom (Innkeeper)</li>
+              <li>Military Supplies – Elfa (Blacksmith)</li>
+              <li>Luxuries – Ramanit (Storage Keeper)</li>
+              <li>Relic – Patrigio (Night Vendor)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Kamaslyvia</td>
+          <td>
+            <ul>
+              <li>General Goods – Near Wandering Alchemist in Grana</li>
+              <li>Raw Materials – Okiara (South Trade Manager)</li>
+              <li>Clothes – Grelias (Central Market)</li>
+              <li>Medicine – Kara (Material Vendor)</li>
+              <li>Food – Herbin (Innkeeper)</li>
+              <li>Military Supplies – Dikzipo (Blacksmith)</li>
+              <li>Luxuries – Grelias (Central Market)</li>
+              <li>Relic – Grelias (Central Market)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – South Grana Bridge</li>
+              <li>
+                <span class="icon-container">
+                  <a href="img/rumors/kama_rawmats.png" class="rumor-hover-href" target="_blank">
+                    Raw Materials – Okiara (South Trade Manager)
+                    <img src="img/rumors/kama_rawmats.png" alt="Kamasylvia Raw Mats" class="rumor-hover-img">
+                  </a>
+                </span>
+              </li>
+              <li>Clothes – Grelias (Central Market)</li>
+              <li>Medicine – Kara (Material Vendor)</li>
+              <li>
+                <span class="icon-container">
+                  <a href="img/rumors/kama_food.png" class="rumor-hover-href" target="_blank">
+                    Food – Herbin (Innkeeper)
+                    <img src="img/rumors/kama_food.png" alt="Kamasylvia Food" class="rumor-hover-img">
+                  </a>
+                </span>
+              </li>
+              <li>Military Supplies – Dikzipo (Blacksmith)</li>
+              <li>Luxuries – Vipiko (Storage Keeper)</li>
+              <li>Relic – Kara (Material Vendor)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Drieghan</td>
+          <td>
+            <ul>
+              <li>General Goods – Seiri (General Goods)</li>
+              <li>Raw Materials – Tikara (Trade Manager)</li>
+              <li>Clothes – Tamasa (Central Market)</li>
+              <li>Medicine – Derjeen (Material Vendor)</li>
+              <li>Food – Bamam (Innkeeper)</li>
+              <li>Military Supplies – Hughol (Blacksmith)</li>
+              <li>Luxuries – Siemo (Furniture Dealer)</li>
+              <li>Relic – Patrigio (Night Vendor)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – Seiri (General Goods)</li>
+              <li>Raw Materials – Tikara (Trade Manager)</li>
+              <li>Clothes – Tamasa (Central Market)</li>
+              <li>Medicine – Derjeen (Material Vendor)</li>
+              <li>Food – Bamam (Innkeeper)</li>
+              <li>Military Supplies – Hughol (Blacksmith)</li>
+              <li>Luxuries – Siemo (Furniture Dealer)</li>
+              <li>Relic – Patrigio (Night Vendor)</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Mountain of<br>
+          Eternal Winter</td>
+          <td>
+            <ul>
+              <li>General Goods – Fughar</li>
+              <li>Raw Materials – Toma (Wind Nol’s Perch node)</li>
+              <li>Clothes – Rodawah (Erethea’s Belt Node)</li>
+              <li>Medicine – Tsetseg (Herb Researcher)</li>
+              <li>Food – Biyamba (Fruit Vendor)</li>
+              <li>Military Supplies – Vatu (Carpet Vendor)</li>
+              <li>Luxuries – Umter (Wintertime Vendor)</li>
+              <li>Relic – Kebernil (South Stable Keeper)</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li>General Goods – Fughar</li>
+              <li>Raw Materials – Sharin (General Goods)</li>
+              <li>Clothes – Rodawah (Erethea’s Belt Node)</li>
+              <li>Medicine – Zibaya (General Goods)</li>
+              <li>Food – Biyamba (Fruit Vendor)</li>
+              <li>Military Supplies – Tazral (Blacksmith)</li>
+              <li>Luxuries – Aemaq (Basket Vendor)</li>
+              <li>Relic – Tazral (Blacksmith – north side of the bridge)</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+  <h3>&nbsp;</h3>
+
+  <script>
+    const statuses = {
+      "slightly-rise": "#2d7e33",
+      "rise": "#4CAF50",
+      "skyrocket": "#4aec57",
+      "fake": "#b07a78"
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var copyButton = document.getElementById('copyButton');
+      var loadAddButton = document.getElementById('loadAddButton');
+      var fullReloadButton = document.getElementById('fullReloadButton');
+      var localStorageDataInput = document.getElementById('localStorageData');
+
+      copyButton.addEventListener('click', function() {
+        const sortedlocalStorage = Object.keys(localStorage).sort();
+        const sortedlocalStorageJson = {};
+        sortedlocalStorage.forEach(key => {
+          sortedlocalStorageJson[key] = localStorage[key];
+        });
+
+        var localStorageData = JSON.stringify(sortedlocalStorageJson, null, 2);
+        localStorageDataInput.value = localStorageData;
+        
+        localStorageDataInput.select();
+        document.execCommand('copy');
+        localStorageDataInput.value = '';
+        
+        alert('Saved data copied to clipboard!');
+      });
+
+      loadAddButton.addEventListener('click', function() {
+        var loadedData = localStorageDataInput.value;
+        var parsedData = JSON.parse(loadedData);
+
+        var confirmAddLoad = window.confirm('Are you sure you want to ADD from this data?');
+
+        if (confirmAddLoad) {
+          for (var key in parsedData) {
+            if (parsedData.hasOwnProperty(key)) {
+              localStorage.setItem(key, parsedData[key]);
+            }
+          }
+          loadSavedColors();
+          localStorageDataInput.value = '';
+        }
+      });
+
+      fullReloadButton.addEventListener('click', function() {
+        var loadedData = localStorageDataInput.value;
+        var parsedData = JSON.parse(loadedData);
+
+        var confirmReload = window.confirm('This will PURGE and RELOAD all of your current saved setting. Are you sure?');
+
+        resetAllColors();
+
+        for (var key in parsedData) {
+          if (parsedData.hasOwnProperty(key)) {
+            localStorage.setItem(key, parsedData[key]);
+          }
+        }
+        loadSavedColors();
+        localStorageDataInput.value = '';
+        // alert('Individual key-value pairs loaded and saved to Local Storage');
+      });
+    });
+
+    function updateCountdown(targetDate, countdownElement) {
+      const now = new Date();
+      const timeLeft = targetDate - now;
+      const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      
+      if (timeLeft <= 0) {
+        resetAllColors()
+        startIntervalCountdown();
+        location.reload();
+      }
+      
+      const countdownText = `${hours}h ${minutes}m ${seconds}s`;
+      countdownElement.textContent = countdownText;
+    }
+    
+    function updateCurrentTime(currentTimeElement) {
+      const now = new Date();
+      currentTimeElement.textContent = `Current UTC Time: ${now.toUTCString()}`;
+    }
+    
+    function startIntervalCountdown() {
+      const now = new Date();
+      const intervalStartDate = new Date();
+      // Set the hours to the next reset time (2 AM, 6 AM, 10 AM, 2 PM, 6 PM, and 10 PM)
+      const resetHours = [2, 6, 10, 14, 18, 22];
+      const currentHour = now.getUTCHours();
+      const nextResetHour = resetHours.find(hour => hour > currentHour);
+      
+      if (nextResetHour !== undefined) {
+      intervalStartDate.setUTCHours(nextResetHour, 0, 0, 0);
+      } else {
+      intervalStartDate.setUTCDate(intervalStartDate.getUTCDate() + 1);
+      intervalStartDate.setUTCHours(resetHours[0], 0, 0, 0);
+      }
+      const countdownElement = document.getElementById('countdown');
+      const currentTimeElement = document.getElementById('currentTime');
+      updateCurrentTime(currentTimeElement);
+      setInterval(() => updateCountdown(intervalStartDate, countdownElement), 1000);
+      setInterval(() => updateCurrentTime(currentTimeElement), 1000);
+
+      // Load saved colors from Local Storage
+      loadSavedColors();
+    }
+    startIntervalCountdown();
+    
+    function changeColor(button, region) {
+      const row = button.closest('tr');
+      const categoryCell = row.querySelector('.category');
+      const buttonColorClass = button.classList[1]; // Assuming the color class is the second class
+
+      const newBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue(`--${buttonColorClass}`);
+
+      categoryCell.style.backgroundColor = newBackgroundColor;
+      // Save the color to Local Storage
+      // localStorage.setItem(`${region}-${categoryCell.textContent}`, newBackgroundColor);
+
+      // Use human readable version
+      localStorage.setItem(`${region}-${categoryCell.textContent}`, `${buttonColorClass}`);
+    }
+    
+    function resetColor(button, region) {
+      const row = button.closest('tr');
+      const categoryCell = row.querySelector('.category');
+      categoryCell.style.backgroundColor = '';
+      // Remove the saved color from Local Storage
+      localStorage.removeItem(`${region}-${categoryCell.textContent}`);
+    }
+    
+    function resetAllColors() {
+      const categoryCells = document.querySelectorAll('.category');
+      categoryCells.forEach(cell => {
+        const row = cell.closest('tr');
+        const region = row.closest('tr').getAttribute('data-region');
+        localStorage.removeItem(`${region}-${cell.textContent}`);
+        cell.style.backgroundColor = ''; // Reset background color to default
+      });
+    }
+
+    function confirmResetAllColors() {
+      const confirmed = confirm("Are you sure you want to reset all cell colors?");
+      if (confirmed) {
+        resetAllColors();
+      }
+    }
+
+    function loadSavedColors() {
+      // Load saved colors from Local Storage
+      const categoryCells = document.querySelectorAll('.category');
+      categoryCells.forEach(cell => {
+        const row = cell.closest('tr');
+        const region = row.closest('tr').getAttribute('data-region');
+        const savedColor = localStorage.getItem(`${region}-${cell.textContent}`);
+        console.log(savedColor);
+        if (savedColor) {
+          cell.style.backgroundColor = statuses[savedColor];
+        }
+      });
+    }
+    </script>
+    <div id="colorBox"></div>
+
+    <div class="footer">
+      <p>
+        <span><a class="footer-text" href="terms.html" target="_blank">Terms of Service</a></span>
+        <span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
+        <span><a class="footer-text" href="https://discord.com/channels/1128432330831319072/1128558574143012905" target="_blank">Discord</a></span>
+      </p>
+      <p>&copy; 2023 Xarilrt. All rights reserved. | <a href="privacy.html" target="_blank">Privacy Policy</a></p>
+    </div>
+  </body>
+</html>
